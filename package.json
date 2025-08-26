@@ -8,7 +8,6 @@
     "serve:rspack": "node --no-deprecation rspack.js serve",
     "build": "rimraf dist && node --no-deprecation rspack.js build",
     "build:zip": "rimraf dist && node --no-deprecation rspack.js build && node build-zip.cjs",
-    "print-info": "node -e \"require('./layouts').donationConsole()\"",
     "clear": "rimraf node_modules&&npm install  --registry=--registry=https://registry.npmmirror.com",
     "update": "ncu -u --reject chalk,sass,sass-loader --registry=https://registry.npmmirror.com&&pnpm i",
     "push": "start ./push.sh"
