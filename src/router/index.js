@@ -51,32 +51,34 @@ export const asyncRoutes = [
       },
     ],
   },
-
-  /* {
-    path: "/test",
+  {
+    path: "/setting",
     component: Layout,
     redirect: "noRedirect",
+    name: "setting",
+    meta: { title: "系统设置", icon: "cog" },
     children: [
       {
-        path: "test",
-        name: "Test",
-        component: () => import("@/views/test/index"),
-        meta: {
-          title: "test",
-          icon: "marker",
-          permissions: ["admin"],
-        },
+        path: "users",
+        name: "Users",
+        component: () => import("@/views/setting/users/user.vue"),
+        meta: { title: "用户管理"},
+      },
+      {
+        path: "subscriptions",
+        name: "Subscriptions",
+        component: () => import("@/views/404"),
+        meta: { title: "订阅管理" },
       },
     ],
-  }, */
-
+  },
   {
     path: "/vab",
     component: Layout,
     redirect: "noRedirect",
     name: "Vab",
     alwaysShow: true,
-    meta: { title: "组件", icon: "box-open", defaultOpen: true },
+    meta: { title: "组件", icon: "box-open", defaultOpen: false },
     children: [
       {
         path: "vue3Demo",
@@ -323,64 +325,27 @@ export const asyncRoutes = [
       // },
     ],
   },
-
-  {
-    path: "/external-store",
-    component: Layout,
-    meta: {
-      title: "",
-      icon: "",
-    },
-    children: [
-      {
-        path: "https://vuejs-core.cn/store",
-        meta: {
-          title: "模板市场",
-          target: "_blank",
-          icon: "box-open",
-        },
-      },
-    ],
-  },
-  {
-    path: "/external-job",
-    component: Layout,
-    meta: {
-      title: "",
-      icon: "",
-    },
-    children: [
-      {
-        path: "https://job.vuejs-core.cn/posts",
-        meta: {
-          title: "找工作",
-          target: "_blank",
-          icon: "horse-head",
-        },
-      },
-    ],
-  },
-  {
-    path: "/error",
-    component: EmptyLayout,
-    redirect: "noRedirect",
-    name: "Error",
-    meta: { title: "错误页", icon: "bug" },
-    children: [
-      {
-        path: "401",
-        name: "Error401",
-        component: () => import("@/views/401"),
-        meta: { title: "401" },
-      },
-      {
-        path: "404",
-        name: "Error404",
-        component: () => import("@/views/404"),
-        meta: { title: "404" },
-      },
-    ],
-  },
+  // {
+  //   path: "/error",
+  //   component: EmptyLayout,
+  //   redirect: "noRedirect",
+  //   name: "Error",
+  //   meta: { title: "错误页", icon: "bug" },
+  //   children: [
+  //     {
+  //       path: "401",
+  //       name: "Error401",
+  //       component: () => import("@/views/401"),
+  //       meta: { title: "401" },
+  //     },
+  //     {
+  //       path: "404",
+  //       name: "Error404",
+  //       component: () => import("@/views/404"),
+  //       meta: { title: "404" },
+  //     },
+  //   ],
+  // },
   {
     path: "/:pathMatch(.*)*",
     redirect: "/404",

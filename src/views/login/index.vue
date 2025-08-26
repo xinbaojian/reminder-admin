@@ -52,7 +52,7 @@
 
           <div class="form-actions">
             <el-checkbox v-model="rememberMe">记住我</el-checkbox>
-            <a href="javascript:;" class="forgot-password">忘记密码?</a>
+            <!-- <a href="javascript:;" class="forgot-password">忘记密码?</a> -->
           </div>
 
           <el-button
@@ -64,19 +64,19 @@
             登录
           </el-button>
 
-          <div class="register-link">
+          <!-- <div class="register-link">
             <span>还没有账号?</span>
             <router-link to="/register" class="create-account">
               立即注册
             </router-link>
-          </div>
+          </div> -->
         </el-form>
       </div>
 
       <div class="login-image">
         <div class="overlay">
           <h2 class="slogan">高效 · 便捷 · 安全</h2>
-          <p class="description">基于Vue3的现代化管理系统</p>
+          <!-- <p class="description">基于Vue3的现代化管理系统</p> -->
         </div>
       </div>
     </div>
@@ -99,8 +99,8 @@ const store = useStore();
 // 响应式状态
 const state = reactive({
   form: {
-    username: "admin",
-    password: "123456",
+    username: "xinbaojian",
+    password: "Sadangel520_",
   },
   rules: {
     username: [{ required: true, trigger: "blur", message: "请输入用户名" }],
@@ -332,7 +332,7 @@ const { form, rules, loading, passwordType, redirect } = toRefs(state);
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: center;

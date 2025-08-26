@@ -6,7 +6,8 @@ const network = {
   baseURL:
     process.env.NODE_ENV === "production"
       ? "./vab-mock-server"
-      : "/vab-mock-server",
+      : "http://localhost:8000/api/v1",
+      // : "https://reminder.xiuyuan.xin/api/v1",
   //配后端数据的接收方式application/json;charset=UTF-8或者application/x-www-form-urlencoded;charset=UTF-8
   contentType: "application/json;charset=UTF-8",
   //消息框消失时间
