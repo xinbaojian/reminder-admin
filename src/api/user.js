@@ -1,10 +1,9 @@
 import request from "@/utils/request";
 import { tokenName } from "@/config";
-const BASE_URL = '/api/v1';
 
 export async function login(data) {
   return request({
-    url: `${BASE_URL}/login`,
+    url: `/login`,
     method: "post",
     data,
   });
