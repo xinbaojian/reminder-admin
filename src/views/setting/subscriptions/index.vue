@@ -28,10 +28,10 @@
         row-key="id"
         v-loading="state.loading"
       >
-        <el-table-column show-overflow-tooltip prop="name" label="订阅名称" min-width="200" />
+        <el-table-column show-overflow-tooltip prop="name" label="订阅名称" min-width="120" />
         <el-table-column show-overflow-tooltip prop="type" label="类型" min-width="120" />
         <el-table-column show-overflow-tooltip prop="remainingDays" label="剩余天数" min-width="80" />
-        <el-table-column show-overflow-tooltip prop="status" label="状态" min-width="120">
+        <el-table-column show-overflow-tooltip prop="status" label="状态" min-width="80">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">{{
               row.status === 1 ? "正常" : "禁用"
@@ -48,7 +48,7 @@
         <el-table-column show-overflow-tooltip prop="description" label="描述" min-width="160" />
         <el-table-column show-overflow-tooltip prop="createdAt" label="创建日期" min-width="160" />
         <el-table-column show-overflow-tooltip prop="updatedAt" label="更新日期" min-width="160" />
-        <el-table-column label="操作" width="200">
+        <el-table-column fixed="right" label="操作" min-width="100">
           <template #default="{ row }">
             <el-button type="text" @click="editClick(row)">编辑</el-button>
             <el-popconfirm
