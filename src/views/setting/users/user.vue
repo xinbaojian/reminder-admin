@@ -39,7 +39,7 @@
         </el-table-column>
         <el-table-column prop="createdAt" label="创建日期" min-width="160" />
         <el-table-column prop="updatedAt" label="更新日期" min-width="160" />
-        <el-table-column label="操作" width="200">
+        <el-table-column fixed="right" label="操作" min-width="60">
           <template #default="{ row }">
             <el-button type="text" @click="editUser(row)">编辑</el-button>
             <el-popconfirm title="确认删除吗?" confirm-button-text="删除" cancel-button-text="取消" @confirm="deleteUserClick(row)">
