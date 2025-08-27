@@ -26,7 +26,7 @@
         :data="state.userList"
         style="width: 100%"
         row-key="id"
-        v-loading="loading"
+        v-loading="state.loading"
       >
         <el-table-column prop="username" label="用户名称" min-width="200" />
         <el-table-column prop="email" label="邮箱" min-width="120" />
@@ -55,10 +55,10 @@
 
       <div class="pagination-container">
         <el-pagination
-          v-model:current-page="currentPage"
-          v-model:page-size="pageSize"
+          v-model:current-page="state.currentPage"
+          v-model:page-size="state.pageSize"
           :page-sizes="[10, 20, 50, 100]"
-          :total="totalProjects"
+          :total="state.totalUser"
           layout="total, sizes, prev, pager, next, jumper"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -124,6 +124,7 @@ const state = reactive({
   searchForm: {
     username: '',
   },
+  loading: false,
   userDialogVisible: false,
   editingUser: false,
   userForm: {
@@ -165,11 +166,11 @@ const getUserPage = () => {
 }
 
 function handleSizeChange(val) {
-  this.pageSize = val;
-  this.currentPage = 1;
+  state.pageSize = val;
+  state.currentPage = 1;
 }
 function handleCurrentChange(val) {
-  this.currentPage = val;
+  state.currentPage = val;
 }
 
 function addUser() {

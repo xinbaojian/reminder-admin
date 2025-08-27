@@ -67,7 +67,7 @@ export const asyncRoutes = [
       {
         path: "subscriptions",
         name: "Subscriptions",
-        component: () => import("@/views/404"),
+        component: () => import("@/views/setting/subscriptions/index.vue"),
         meta: { title: "订阅管理" },
       },
     ],
