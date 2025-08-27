@@ -185,15 +185,17 @@ const state = reactive({
 function handleSizeChange(val) {
   state.pageSize = val;
   state.currentPage = 1;
+  queryData();
 }
 function handleCurrentChange(val) {
   state.currentPage = val;
+  queryData();
 }
 
 function queryData(){
   getSubscriptionList({
     page: state.currentPage,
-    pageSize: state.pageSize,
+    size: state.pageSize,
     name: state.searchForm.name
   }).then(res => {
     if (res.code === 0) {
