@@ -15,10 +15,10 @@ const network = {
   //最长请求时间
   requestTimeout: 15000,
   //操作正常code，支持String、Array、int多种类型
-  successCode: [200, 0],
+  successCode: [-1,0,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,300],
   //登录失效code
-  invalidCode: 402,
+  invalidCode: 61,
   //无权限code
-  noPermissionCode: 401,
+  noPermissionCode: 61,
 };
 module.exports = network;

@@ -78,7 +78,7 @@ export const asyncRoutes = [
     redirect: "noRedirect",
     name: "Vab",
     alwaysShow: true,
-    meta: { title: "组件", icon: "box-open", defaultOpen: false },
+    meta: { title: "组件", icon: "box-open" },
     children: [
       {
         path: "vue3Demo",
