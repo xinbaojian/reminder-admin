@@ -4,11 +4,11 @@
 const network = {
   // 默认的接口地址 如果是开发环境和生产环境走vab-mock-server，当然你也可以选择自己配置成需要的接口地址
   // 统一使用代理前缀，开发环境和生产环境都走 /api/v1
-  // baseURL: '/api/v1',
-    baseURL:
-    process.env.NODE_ENV === "production"
-      ? "./vab-mock-server"
-      : "http://localhost:8000/api/v1",
+  baseURL: '/api/v1',
+    // baseURL:
+    // process.env.NODE_ENV === "production"
+    //   ? "./vab-mock-server"
+    //   : "http://localhost:8000/api/v1",
       // : "https://reminder.xiuyuan.xin/api/v1",
 
   //配后端数据的接收方式application/json;charset=UTF-8或者application/x-www-form-urlencoded;charset=UTF-8

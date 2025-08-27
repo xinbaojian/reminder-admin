@@ -264,14 +264,13 @@ module.exports = {
     //   target: [`http://localhost:${devPort || 8091}`],
     // },
     // 新增代理配置
-    // proxy: {
-    //   '/api': {
-    //     // target: 'http://subscription:8000',
-    //     target: 'http://localhost:8000',
-    //     changeOrigin: true,
-    //     pathRewrite: { '^/api': '/api' },
-    //   },
-    // },
+    proxy: {
+      '/api': {
+        target: 'http://subscription:8000',
+        changeOrigin: true,
+        pathRewrite: { '^/api': '/api' },
+      },
+    },
     setupMiddlewares: (middlewares, devServer) => {
       if (!devServer) {
         throw new Error("dev-server is not defined");
