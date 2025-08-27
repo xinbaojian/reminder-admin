@@ -113,6 +113,7 @@ import { Search } from "@element-plus/icons-vue";
 import { getUserList ,createUser, updateUser, deleteUser} from "@/api/user";
 import { onMounted, reactive, ref } from "vue";
 import { ElForm, ElMessage } from "element-plus";
+import { size } from "lodash";
 
 const userFormRef = ref();
 
@@ -155,12 +156,13 @@ const state = reactive({
 const getUserPage = () => {
   getUserList({
     username: state.searchForm.username,
-    pageNum: state.currentPage,
-    pageSize: state.pageSize,
+    page: state.currentPage,
+    size: state.pageSize,
   }).then(res => {
     if (res.code === 0) {
       state.userList = res.data.list;
       state.totalUser = res.data.total;
+      console.log(res,state);
     }
   })
 }
@@ -168,9 +170,11 @@ const getUserPage = () => {
 function handleSizeChange(val) {
   state.pageSize = val;
   state.currentPage = 1;
+  getUserPage();
 }
 function handleCurrentChange(val) {
   state.currentPage = val;
+  getUserPage();
 }
 
 function addUser() {
