@@ -70,6 +70,12 @@ export const asyncRoutes = [
         component: () => import("@/views/setting/subscriptions/index.vue"),
         meta: { title: "订阅管理" },
       },
+      {
+        path: "notifications",
+        name: "Notifications",
+        component: () => import("@/views/setting/notifications/notifications.vue"),
+        meta: { title: "通知管理" },
+      },
     ],
   },
   // {
