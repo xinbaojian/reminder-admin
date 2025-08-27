@@ -77,8 +77,13 @@ if (mode === "production") {
 
     const compiler = rspack(config);
 
-    // 使用rspack.config.js中的所有devServer配置
+    // Use rspack.config.js devServer configuration
     const devServerOptions = config.devServer || {};
+
+    // Ensure devServerOptions.proxy is an array if it exists
+    if (devServerOptions.proxy && !Array.isArray(devServerOptions.proxy)) {
+      devServerOptions.proxy = [devServerOptions.proxy];
+    }
 
     // 设置mock服务器，不再检查环境变量，始终启用mock
     if (!devServerOptions.setupMiddlewares) {
@@ -112,12 +117,17 @@ if (mode === "production") {
 
       const webpackConfig = {
         ...config,
-        // 添加webpack特定配置
+        // Add webpack specific configuration
         mode: config.mode,
       };
 
       const compiler = webpack(webpackConfig);
       const devServerOptions = config.devServer || {};
+
+      // Ensure devServerOptions.proxy is an array if it exists
+      if (devServerOptions.proxy && !Array.isArray(devServerOptions.proxy)) {
+        devServerOptions.proxy = [devServerOptions.proxy];
+      }
 
       // 不再检查环境变量，始终启用mock
       const originalBefore = devServerOptions.before;
