@@ -37,7 +37,8 @@ export const asyncRoutes = [
   {
     path: "/",
     component: Layout,
-    redirect: "/index",
+    redirect: "/setting/users",
+    hidden: true,
     children: [
       {
         path: "index",
