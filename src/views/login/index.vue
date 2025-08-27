@@ -160,7 +160,7 @@ const handleLogin = () => {
       try {
         // 使用命名空间调用login action
         await store.dispatch("user/login", state.form);
-
+        state.loading = false;
         // 登录成功后，让导航守卫处理路由跳转
         // 不需要手动获取用户信息和添加路由，导航守卫会处理
         const { query } = router.currentRoute.value;

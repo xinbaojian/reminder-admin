@@ -45,24 +45,28 @@ const actions = {
     commit("setPermissions", permissions);
   },
   async login({ commit }, userInfo) {
-    const { data } = await login(userInfo);
-    const accessToken = data[tokenName];
-    if (accessToken) {
-      commit("setAccessToken", accessToken);
-      const hour = new Date().getHours();
-      const thisTime =
-        hour < 8
-          ? "早上好"
-          : hour <= 11
-          ? "上午好"
-          : hour <= 13
-          ? "中午好"
-          : hour < 18
-          ? "下午好"
-          : "晚上好";
-      ElMessage.success(`欢迎登录${title}，${thisTime}！`);
+    const { code, data, message } = await login(userInfo);
+    if (code !== 0) {
+      ElMessage.error(message || "登录失败");
     } else {
-      ElMessage.error(`登录接口异常，未正确返回${tokenName}...`);
+      const accessToken = data[tokenName];
+      if (accessToken) {
+        commit("setAccessToken", accessToken);
+        const hour = new Date().getHours();
+        const thisTime =
+          hour < 8
+            ? "早上好"
+            : hour <= 11
+            ? "上午好"
+            : hour <= 13
+            ? "中午好"
+            : hour < 18
+            ? "下午好"
+            : "晚上好";
+        ElMessage.success(`欢迎登录${title}，${thisTime}！`);
+      } else {
+        ElMessage.error(`登录接口异常，未正确返回${tokenName}...`);
+      }
     }
   },
   async getUserInfo({ commit, state }) {
