@@ -39,7 +39,7 @@
         </el-table-column>
         <el-table-column prop="createdAt" label="创建日期" min-width="160" />
         <el-table-column prop="updatedAt" label="更新日期" min-width="160" />
-        <el-table-column fixed="right" label="操作" min-width="60">
+        <el-table-column fixed="right" label="操作" min-width="100">
           <template #default="{ row }">
             <el-button type="text" @click="editUser(row)">编辑</el-button>
             <el-popconfirm title="确认删除吗?" confirm-button-text="删除" cancel-button-text="取消" @confirm="deleteUserClick(row)">
@@ -49,6 +49,7 @@
                 >
               </template>
             </el-popconfirm>
+            <el-button type="text" @click="showPasswordDialog(row)">更新密码</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -105,17 +106,44 @@
         </span>
       </template>
     </el-dialog>
+    <!--更新密码-->
+    <el-dialog
+      v-model="state.passwordDialogVisible"
+      title="更新密码"
+      width="400px"
+    >
+      <el-form
+        ref="passwordFormRef"
+        :model="state.passwordForm"
+        :rules="state.passwordRules"
+        label-width="100px"
+      >
+        <el-form-item label="新密码" prop="pwd">
+          <el-input v-model="state.passwordForm.pwd" type="password" />
+        </el-form-item>
+        <el-form-item label="确认密码" prop="newPwd">
+          <el-input v-model="state.passwordForm.newPwd" type="password" />
+        </el-form-item>
+      </el-form>
+
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="closePasswordDialog()">取消</el-button>
+          <el-button type="primary" @click="updatePasswordClick()"> 更新 </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup type="ts">
 import { Search } from "@element-plus/icons-vue";
-import { getUserList ,createUser, updateUser, deleteUser} from "@/api/user";
+import { getUserList ,createUser, updateUser, deleteUser,updatePassword} from "@/api/user";
 import { onMounted, reactive, ref } from "vue";
 import { ElForm, ElMessage } from "element-plus";
-import { size } from "lodash";
 
 const userFormRef = ref();
+const passwordFormRef = ref();
 
 const state = reactive({
   userList: [],
@@ -127,6 +155,7 @@ const state = reactive({
   },
   loading: false,
   userDialogVisible: false,
+  passwordDialogVisible: false,
   editingUser: false,
   userForm: {
     username: '',
@@ -151,6 +180,14 @@ const state = reactive({
     ],
     password: [{ required: true, message: "请输入密码", trigger: "blur" }],
   },
+  passwordForm:{
+    pwd: '',
+    newPwd: '',
+  },
+  passwordRules:{
+    pwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
+    newPwd: [{ required: true, message: "请输入新密码", trigger: "blur" }],
+  }
 })
 
 const getUserPage = () => {
@@ -232,6 +269,43 @@ function deleteUserClick(user) {
       getUserPage();
     }
   })
+}
+
+function updatePasswordClick(){
+  state.passwordDialogVisible = true;
+  passwordFormRef.value.validate((valid) => {
+    if (valid) {
+      // Call API to update password
+      updatePassword(state.passwordForm).then(res => {
+        if (res.code === 0) {
+          ElMessage.success("密码更新成功");
+          closePasswordDialog();
+        } else {
+          ElMessage.error(res.message || "密码更新失败");
+        }
+      });
+    } else {
+      ElMessage.error("表单验证失败，请检查输入");
+    }
+  });
+}
+
+function showPasswordDialog(row){
+  state.passwordDialogVisible = true;
+  state.passwordForm = {
+    id: row.id,
+    pwd: '',
+    newPwd: '',
+  };
+}
+
+function closePasswordDialog(){
+  state.passwordDialogVisible = false;
+  state.passwordForm = {
+    id: '',
+    pwd: '',
+    newPwd: '',
+  };
 }
 
 onMounted(() => {

@@ -63,3 +63,12 @@ export function deleteUser(id) {
     method: "delete",
   });
 }
+
+// 更新密码
+export function updatePassword(data) {
+  return request({
+    url: `/user/pwd/${data.id}`,
+    method: "put",
+    data,
+  });
+}
