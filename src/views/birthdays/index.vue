@@ -31,7 +31,7 @@
 
         <el-table-column show-overflow-tooltip prop="birthday" label="出生日期" min-width="160" />
         <el-table-column show-overflow-tooltip prop="lunarBirthday" label="出生日期(农历)" min-width="200" />
-        <el-table-column show-overflow-tooltip prop="thisYearBirthday" label="今年生日(公历)" min-width="160" />
+        <el-table-column show-overflow-tooltip prop="nextBirthday" label="下次生日(公历)" min-width="160" />
         <el-table-column show-overflow-tooltip prop="lunar" label="过农历生日" min-width="100">
           <template #default="{ row }">
             <el-tag v-if="row.lunar == 1" type="success">是</el-tag>
