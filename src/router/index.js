@@ -7,6 +7,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Layout from "@/layouts/index.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { publicPath } from "@/config";
+import component from "element-plus/es/components/tree-select/src/tree-select-option.mjs";
+import { hi } from "element-plus/es/locales.mjs";
 
 export const constantRoutes = [
   {
@@ -37,7 +39,8 @@ export const asyncRoutes = [
   {
     path: "/",
     component: Layout,
-    redirect: "/index",
+    redirect: "/settings/users",
+    hidden: true,
     children: [
       {
         path: "index",
@@ -54,7 +57,7 @@ export const asyncRoutes = [
   {
     path: "/setting",
     component: Layout,
-    redirect: "noRedirect",
+    redirect: "/setting/users",
     name: "setting",
     meta: { title: "系统设置", icon: "cog" },
     children: [
@@ -62,19 +65,42 @@ export const asyncRoutes = [
         path: "users",
         name: "Users",
         component: () => import("@/views/setting/users/user.vue"),
-        meta: { title: "用户管理"},
+        meta: { title: "用户管理" },
       },
+    ],
+  },
+  {
+    path: "/subscriptions",
+    component: Layout,
+    redirect: "/subscriptions/sub-manage",
+    name: "Subscriptions",
+    meta: { title: "订阅与通知", icon: "bell" },
+    children: [
       {
-        path: "subscriptions",
-        name: "Subscriptions",
+        path: "sub-manage",
+        name: "SubManage",
         component: () => import("@/views/setting/subscriptions/index.vue"),
         meta: { title: "订阅管理" },
       },
       {
         path: "notifications",
         name: "Notifications",
-        component: () => import("@/views/setting/notifications/notifications.vue"),
+        component: () =>
+          import("@/views/setting/notifications/index.vue"),
         meta: { title: "通知管理" },
+      },
+    ],
+  },
+  {
+    path: "/",
+    component: Layout,
+    redirect: "/birthdays",
+    children: [
+      {
+        path: "birthdays",
+        name: "Birthdays",
+        component: () => import("@/views/birthdays/index.vue"),
+        meta: { title: "生日提醒", icon: "gem" },
       },
     ],
   },
