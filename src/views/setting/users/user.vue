@@ -199,7 +199,6 @@ const getUserPage = () => {
     if (res.code === 0) {
       state.userList = res.data.list;
       state.totalUser = res.data.total;
-      console.log(res,state);
     }
   })
 }
