@@ -19,7 +19,7 @@ export function addBirthday(data) {
 
 export function updateBirthday(data) {
   return request({
-    url: `/birthdays/${id}`,
+    url: `/birthdays/${data.id}`,
     method: "put",
     data,
   });

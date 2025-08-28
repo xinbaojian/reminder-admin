@@ -96,7 +96,7 @@
             &nbsp;<el-text type="warning">请选择公历出生日期</el-text>
         </el-form-item>
         <el-form-item label="是否农历" prop="lunar">
-          <el-switch v-model="state.form.lunar" :active-value="1" :inactive-value="0" active-text="农历生日" inactive-text="公历生日" />
+          <el-switch v-model="state.form.lunar" :active-value="1" :inactive-value="2" active-text="农历生日" inactive-text="公历生日" />
         </el-form-item>
         <el-form-item label="提前提醒天数" prop="reminderDays">
           <el-input-number v-model="state.form.reminderDays" min="1" style="width: 100%" />
@@ -110,7 +110,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="state.dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="saveBirthday"> 保存 </el-button>
+          <el-button type="primary" :loading="state.saveBtnLoading" @click="saveBirthday"> 保存 </el-button>
         </span>
       </template>
     </el-dialog>
@@ -138,6 +138,7 @@ const state = reactive({
   total: 0,
   dialogVisible: false,
   editing: false,
+  saveBtnLoading: false,
   sexOptions: [
     { label: "保密", value: 0 },
     { label: "男", value: 1 },
@@ -147,7 +148,7 @@ const state = reactive({
     name: "",
     sex: 0,
     birthday: "",
-    lunar: 0,
+    lunar: 1,
     reminderDays: 1,
     status: 1,
   },
@@ -166,11 +167,11 @@ function addClick() {
     name: "",
     sex: 0,
     birthday: "",
-    lunar: 0,
+    lunar: 1,
     reminderDays: 1,
     status: 1,
   }
-}
+  }
 
 function editClick(row) {
   state.dialogVisible = true;
@@ -192,6 +193,8 @@ function deleteClick(row) {
 }
 
 function saveBirthday() {
+  if (state.saveBtnLoading) return;
+  state.saveBtnLoading = true;
   formRef.value.validate((valid) => {
     if (valid) {
       if (state.editing) {
@@ -207,10 +210,7 @@ function saveBirthday() {
           ElMessage.error("更新失败");
         });
       } else {
-        console.log(state.form);
         const data = { ...state.form };
-        console.log('data',data);
-        // 添加逻辑
         addBirthday(data).then((res) => {
           if (res.code === 0) {
             ElMessage.success("添加成功");
@@ -228,6 +228,7 @@ function saveBirthday() {
       return false;
     }
   });
+  state.saveBtnLoading = false;
 }
 
 function queryData() {
