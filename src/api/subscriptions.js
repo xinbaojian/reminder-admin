@@ -30,3 +30,10 @@ export function deleteSubscription(id) {
     method: "delete",
   });
 }
+
+export function recalculateSubscriptions() {
+  return request({
+    url: `/subscriptions/recalculate`,
+    method: "get",
+  });
+}

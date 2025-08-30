@@ -18,6 +18,7 @@
             </el-input>
             <el-button type="primary" @click="queryData">搜索</el-button>
             <el-button type="primary" @click="addClick">添加订阅</el-button>
+            <el-button type="primary" @click="RecalculateClick">重新计算</el-button>
           </div>
         </div>
       </template>
@@ -149,7 +150,7 @@
 import { Search } from "@element-plus/icons-vue";
 import { onMounted, reactive, ref } from "vue";
 import { ElForm, ElMessage } from "element-plus";
-import { getSubscriptionList,addSubscription ,editSubscription,deleteSubscription} from "@/api/subscriptions";
+import { getSubscriptionList,addSubscription ,editSubscription,deleteSubscription, recalculateSubscriptions} from "@/api/subscriptions";
 
 const formRef = ref();
 
@@ -250,6 +251,18 @@ function deleteClick(row) {
   deleteSubscription(row.id).then(res => {
     if (res.code === 0) {
       ElMessage.success("删除成功");
+      queryData();
+    } else {
+      ElMessage.error(res.message);
+    }
+  });
+}
+
+function RecalculateClick(){
+  // 调用重新计算接口
+  recalculateSubscriptions().then(res => {
+    if (res.code === 0) {
+      ElMessage.success("重新计算成功");
       queryData();
     } else {
       ElMessage.error(res.message);
