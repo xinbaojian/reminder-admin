@@ -18,12 +18,17 @@ import { title } from "@/config";
  */
 
 // 创建应用实例
+import ElementPlus from 'element-plus';
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
 const app = createApp(App);
 
 // 使用Vuex
 app.use(store);
 
 app.use(router);
+
+// 设置 Element Plus 语言为中文
+app.use(ElementPlus, { locale: zhCn });
 
 // 初始化所有插件
 plugins(app);
