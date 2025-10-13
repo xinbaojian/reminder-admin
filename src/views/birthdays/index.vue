@@ -28,7 +28,13 @@
             <el-tag v-else type="success">女</el-tag>
           </template>
         </el-table-column>
-
+        <el-table-column show-overflow-tooltip prop="remainingDays" label="距离生日" min-width="120">
+          <template #default="{ row }">
+            <el-tag v-if="row.remainingDays > 0" type="success">还有{{ row.remainingDays }}天</el-tag>
+            <el-tag v-else-if="row.remainingDays == 0" type="warning">今天</el-tag>
+            <el-tag v-else type="danger">已过{{ -row.remainingDays }}天</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column show-overflow-tooltip prop="birthday" label="出生日期" min-width="160" />
         <el-table-column show-overflow-tooltip prop="lunarBirthday" label="出生日期(农历)" min-width="200" />
         <el-table-column show-overflow-tooltip prop="nextBirthday" label="下次生日(公历)" min-width="160" />
@@ -36,13 +42,6 @@
           <template #default="{ row }">
             <el-tag v-if="row.lunar == 1" type="success">是</el-tag>
             <el-tag v-else type="info">否</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="remainingDays" label="距离生日" min-width="120">
-          <template #default="{ row }">
-            <el-tag v-if="row.remainingDays > 0" type="success">还有{{ row.remainingDays }}天</el-tag>
-            <el-tag v-else-if="row.remainingDays == 0" type="warning">今天</el-tag>
-            <el-tag v-else type="danger">已过{{ -row.remainingDays }}天</el-tag>
           </template>
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="status" label="状态" min-width="80">
