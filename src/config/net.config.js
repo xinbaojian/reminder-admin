@@ -7,7 +7,7 @@ const network = {
   // baseURL: '/api/v1',
     baseURL:
     process.env.NODE_ENV === "production"
-      ? "./vab-mock-server"
+      ? "https://reminder.xiuyuan.xin/api/v1"
       : "http://localhost:8000/api/v1",
       // : "https://reminder.xiuyuan.xin/api/v1",
 
