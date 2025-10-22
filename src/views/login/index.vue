@@ -99,8 +99,8 @@ const store = useStore();
 // 响应式状态
 const state = reactive({
   form: {
-    username: "xinbaojian",
-    password: "Sadangel520_",
+    username: "",
+    password: "",
   },
   rules: {
     username: [{ required: true, trigger: "blur", message: "请输入用户名" }],

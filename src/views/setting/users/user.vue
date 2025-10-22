@@ -28,12 +28,19 @@
         row-key="id"
         v-loading="state.loading"
       >
-        <el-table-column prop="username" label="用户名称" min-width="200" />
+        <el-table-column prop="username" label="用户名称" min-width="60" />
         <el-table-column prop="email" label="邮箱" min-width="120" />
-        <el-table-column prop="status" label="状态" min-width="120">
+        <el-table-column prop="status" label="状态" min-width="50">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">{{
               row.status === 1 ? "正常" : "禁用"
+            }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="roleNames" label="角色" min-width="120">
+          <template #default="{ row }">
+            <el-tag v-for="item in row.roleList" :key="item">{{
+              item.name
             }}</el-tag>
           </template>
         </el-table-column>
@@ -79,8 +86,18 @@
         :rules="state.userRules"
         label-width="100px"
       >
-        <el-form-item label="用户账号" prop="username">
+        <el-form-item label="用户账号" prop="username" style="margin-top: 10px;">
           <el-input v-model="state.userForm.username" />
+        </el-form-item>
+        <el-form-item label="用户角色" prop="roleIds">
+          <el-select v-model="state.userForm.roleIds" placeholder="请选择用户角色" multiple>
+            <el-option
+              v-for="item in state.roleOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="state.userForm.email" />
@@ -139,6 +156,7 @@
 <script setup type="ts">
 import { Search } from "@element-plus/icons-vue";
 import { getUserList ,createUser, updateUser, deleteUser,updatePassword} from "@/api/user";
+import { getRoleOptions } from "@/api/role";
 import { onMounted, reactive, ref } from "vue";
 import { ElForm, ElMessage } from "element-plus";
 
@@ -162,7 +180,9 @@ const state = reactive({
     password: '',
     email: '',
     status: 1,
+    roleIds: [],
   },
+  roleOptions: [],
   userRules: {
     username: [{ required: true, message: "请输入用户账号", trigger: "blur" }],
     email: [
@@ -179,6 +199,7 @@ const state = reactive({
       }
     ],
     password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+    roleIds: [{ required: true, message: "请选择用户角色", trigger: "blur" }],
   },
   passwordForm:{
     pwd: '',
@@ -222,6 +243,11 @@ function addUser() {
     email: '',
     status: 1,
   }
+  getRoleOptions().then(res => {
+    if (res.code === 0) {
+      state.roleOptions = res.data;
+    }
+  })
 }
 
 function saveUser(){
@@ -257,9 +283,16 @@ function saveUser(){
 }
 
 function editUser(row) {
+  getRoleOptions().then(res => {
+    if (res.code === 0) {
+      state.roleOptions = res.data;
+    }
+  })
   state.userDialogVisible = true;
   state.editingUser = true;
   state.userForm = { ...row };
+  console.log(state.userForm)
+
 }
 
 function deleteUserClick(user) {
