@@ -73,6 +73,12 @@ export const asyncRoutes = [
         component: () => import("@/views/setting/role/index.vue"),
         meta: { title: "角色管理" },
       },
+      {
+        path: "cron-config",
+        name: "CronConfig",
+        component: () => import("@/views/setting/cron-config/index.vue"),
+        meta: { title: "定时任务管理" },
+      },
     ],
   },
   {
