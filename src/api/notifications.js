@@ -14,3 +14,11 @@ export function updateNotificationSettings(data) {
     data,
   });
 }
+
+export function testNotification(data) {
+  return request({
+    url: "/notification/test",
+    method: "post",
+    data,
+  });
+}

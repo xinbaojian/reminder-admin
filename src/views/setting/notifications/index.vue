@@ -4,11 +4,11 @@
       <el-col
         v-for="(item, index) in state.dataList"
         :key="index"
-        :lg="6"
-        :md="6"
-        :sm="6"
-        :xl="3"
-        :xs="12"
+        :lg="8"
+        :md="12"
+        :sm="12"
+        :xl="6"
+        :xs="24"
       >
         <el-card style="max-width: 580px">
           <template #header>
@@ -41,6 +41,7 @@
           </el-form>
           <template #footer>
             <div style="text-align: center">
+              <el-button @click="testNotification(index)" :loading="state.testingIndex === index">测试</el-button>
               <el-button type="primary" @click="saveOrUpdateSettings(index)"
                 >保存</el-button
               >
@@ -54,11 +55,12 @@
 
 <script type="ts" setup>
 import { onMounted, reactive } from 'vue';
-import { getNotificationSettings,updateNotificationSettings } from "@/api/notifications";
+import { getNotificationSettings,updateNotificationSettings,testNotification as testNotificationApi } from "@/api/notifications";
 import { ElMessage } from 'element-plus';
 
 const state = reactive({
   dataList:[],
+  testingIndex: null,
 });
 
 function getData(){
@@ -77,6 +79,35 @@ function saveOrUpdateSettings(index) {
     }else{
       ElMessage.error('设置失败');
     }
+  });
+}
+
+function testNotification(index) {
+  const item = state.dataList[index];
+  
+  if (!item.url) {
+    ElMessage.warning('请先输入推送地址');
+    return;
+  }
+  
+  state.testingIndex = index;
+  testNotificationApi({
+    channel: item.channel,
+    url: item.url
+  }).then((res) => {
+    if (res.code === 0) {
+      if (res.data.success) {
+        ElMessage.success('推送成功，请检查是否收到消息');
+      } else {
+        ElMessage.error(res.data.message || '推送失败，请检查推送地址是否正确');
+      }
+    } else {
+      ElMessage.error(res.message || '测试失败');
+    }
+  }).catch(() => {
+    ElMessage.error('测试失败，请稍后重试');
+  }).finally(() => {
+    state.testingIndex = null;
   });
 }
 
