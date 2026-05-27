@@ -11,13 +11,13 @@ const setting = {
   // 进行编译的依赖
   transpileDependencies: [],
   //标题 （包括初次加载雪花屏的标题 页面的标题 浏览器的标题）
-  title: "Vue3 Admin Better",
+  title: "提醒管理",
   //简写
   abbreviation: "vab",
   //开发环境端口号
   devPort: "8091",
   //copyright
-  copyright: "zxwk1998",
+  copyright: "xinbaojian",
   //是否显示页面底部自定义版权信息
   footerCopyright: true,
   //是否显示顶部进度条
@@ -31,9 +31,9 @@ const setting = {
   //加载时显示文字
   loadingText: "正在加载中...",
   //token名称
-  tokenName: "accessToken",
+  tokenName: "Authorization",
   //token在localStorage、sessionStorage存储的key的名称
-  tokenTableName: "vue-admin-better-2024",
+  tokenTableName: "baojian",
   //token存储位置localStorage sessionStorage
   storage: "localStorage",
   //token失效回退到登录页时是否记录本次的路由

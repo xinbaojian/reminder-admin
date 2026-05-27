@@ -3,7 +3,6 @@ import App from "./App.vue";
 import router from "./router";
 import store from "@/store"; // 导入Vuex store
 import plugins from "./plugins";
-import { printLayoutsInfo } from "@/utils/printInfo";
 // 导入布局组件注册函数
 import { registerLayoutComponents } from "@/layouts/export";
 // 导入事件总线
@@ -11,7 +10,7 @@ import eventBus from "@/utils/eventBus";
 // 导入配置
 import { title } from "@/config";
 // 导入mock
-import { mockXHR } from "@/utils/static";
+// import { mockXHR } from "@/utils/static";
 
 /**
  * @author https://github.com/zxwk1998/vue-admin-better （不想保留author可删除）
@@ -19,12 +18,17 @@ import { mockXHR } from "@/utils/static";
  */
 
 // 创建应用实例
+import ElementPlus from 'element-plus';
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
 const app = createApp(App);
 
 // 使用Vuex
 app.use(store);
 
 app.use(router);
+
+// 设置 Element Plus 语言为中文
+app.use(ElementPlus, { locale: zhCn });
 
 // 初始化所有插件
 plugins(app);
@@ -43,13 +47,11 @@ window.$eventBus = eventBus;
 window.$baseTitle = title;
 
 // 检测环境变量，生产环境启用mock
-if (process.env.NODE_ENV === "production") {
-  // 生产环境初始化mock
-  mockXHR();
-  console.log("生产环境已启用Mock拦截，所有接口请求将被Mock拦截");
-}
-// 打印layouts/index.js中的信息到控制台
-printLayoutsInfo();
+// if (process.env.NODE_ENV === "production") {
+//   // 生产环境初始化mock
+//   mockXHR();
+//   console.log("生产环境已启用Mock拦截，所有接口请求将被Mock拦截");
+// }
 
 // 挂载应用
 app.mount("#vue-admin-better");

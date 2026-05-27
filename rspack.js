@@ -6,11 +6,6 @@ process.noDeprecation = true;
 const { rspack } = require("@rspack/core");
 const path = require("path");
 const fs = require("fs");
-// 引入layouts中的donationConsole函数
-const { donationConsole } = require("./layouts");
-
-// 在命令行控制台打印信息
-donationConsole();
 
 const configPath = path.resolve(__dirname, "rspack.config.js");
 const config = require(configPath);
@@ -82,8 +77,13 @@ if (mode === "production") {
 
     const compiler = rspack(config);
 
-    // 使用rspack.config.js中的所有devServer配置
+    // Use rspack.config.js devServer configuration
     const devServerOptions = config.devServer || {};
+
+    // Ensure devServerOptions.proxy is an array if it exists
+    if (devServerOptions.proxy && !Array.isArray(devServerOptions.proxy)) {
+      devServerOptions.proxy = [devServerOptions.proxy];
+    }
 
     // 设置mock服务器，不再检查环境变量，始终启用mock
     if (!devServerOptions.setupMiddlewares) {
@@ -117,12 +117,17 @@ if (mode === "production") {
 
       const webpackConfig = {
         ...config,
-        // 添加webpack特定配置
+        // Add webpack specific configuration
         mode: config.mode,
       };
 
       const compiler = webpack(webpackConfig);
       const devServerOptions = config.devServer || {};
+
+      // Ensure devServerOptions.proxy is an array if it exists
+      if (devServerOptions.proxy && !Array.isArray(devServerOptions.proxy)) {
+        devServerOptions.proxy = [devServerOptions.proxy];
+      }
 
       // 不再检查环境变量，始终启用mock
       const originalBefore = devServerOptions.before;

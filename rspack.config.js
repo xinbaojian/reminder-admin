@@ -260,18 +260,22 @@ module.exports = {
         warnings: false,
       },
     },
-    open: {
-      target: [`http://localhost:${devPort || 8091}`],
-    },
+    // open: {
+    //   target: [`http://localhost:${devPort || 8091}`],
+    // },
+    // 新增代理配置
+    // proxy: {
+    //   '/api': {
+    //     // target: 'http://subscription:8000',
+    //     target: 'http://localhost:8000',
+    //     changeOrigin: true,
+    //     pathRewrite: { '^/api': '/api' },
+    //   },
+    // },
     setupMiddlewares: (middlewares, devServer) => {
       if (!devServer) {
         throw new Error("dev-server is not defined");
       }
-
-      // 始终加载mock服务器
-      const mockServer = require("./mock");
-      mockServer(devServer.app);
-
       return middlewares;
     },
   },

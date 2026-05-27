@@ -19,17 +19,17 @@ import { pickBy, identity } from "lodash-es";
 import { mock } from "mockjs";
 
 // 在生产环境下引入mock数据
-if (process.env.NODE_ENV === "production") {
-  const mockContext = require.context("../../mock/controller", true, /\.js$/);
-  mockContext.keys().forEach((key) => {
-    const mockModule = mockContext(key);
-    if (mockModule.default) {
-      mockModule.default;
-    } else {
-      mockModule;
-    }
-  });
-}
+// if (process.env.NODE_ENV === "production") {
+//   const mockContext = require.context("../../mock/controller", true, /\.js$/);
+//   mockContext.keys().forEach((key) => {
+//     const mockModule = mockContext(key);
+//     if (mockModule.default) {
+//       mockModule.default;
+//     } else {
+//       mockModule;
+//     }
+//   });
+// }
 
 let loadingInstance;
 
@@ -80,7 +80,7 @@ instance.defaults.retryDelay = retryConfig.retryDelay;
 instance.interceptors.request.use(
   (config) => {
     if (store.state.user.accessToken) {
-      config.headers[tokenName] = store.state.user.accessToken;
+      config.headers[tokenName] = 'Bearer ' + store.state.user.accessToken;
     }
 
     //这里会过滤所有为空、0、false的key，如果不需要请自行注释

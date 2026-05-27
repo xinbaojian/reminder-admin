@@ -3,7 +3,7 @@ import { tokenName } from "@/config";
 
 export async function login(data) {
   return request({
-    url: "/login",
+    url: `/login`,
     method: "post",
     data,
   });
@@ -12,7 +12,7 @@ export async function login(data) {
 export function getUserInfo(accessToken) {
   return request({
     url: "/userInfo",
-    method: "post",
+    method: "get",
     data: {
       [tokenName]: accessToken,
     },
@@ -30,5 +30,45 @@ export function register() {
   return request({
     url: "/register",
     method: "post",
+  });
+}
+
+export function getUserList(params) {
+  return request({
+    url: "/user/page",
+    method: "get",
+    params,
+  });
+}
+
+export function createUser(data) {
+  return request({
+    url: "/user",
+    method: "post",
+    data,
+  });
+}
+
+export function updateUser(data) {
+  return request({
+    url: `/user/${data.id}`,
+    method: "put",
+    data,
+  });
+}
+
+export function deleteUser(id) {
+  return request({
+    url: `/user/${id}`,
+    method: "delete",
+  });
+}
+
+// 更新密码
+export function updatePassword(data) {
+  return request({
+    url: `/user/pwd/${data.id}`,
+    method: "put",
+    data,
   });
 }

@@ -1,6 +1,6 @@
 <template>
   <div v-if="routerView" class="app-main-container">
-    <vab-github-corner />
+    <!-- <vab-github-corner /> -->
     <transition mode="out-in" name="fade-transform">
       <keep-alive :include="cachedRoutes" :max="keepAliveMaxNum">
         <router-view :key="key" class="app-main-height" />
@@ -9,7 +9,7 @@
     <footer v-show="footerCopyright" class="footer-copyright">
       Copyright
       <el-icon><CopyDocument /></el-icon>
-      vue3-admin-better 开源免费版 {{ fullYear }}
+      xinbaojian {{ fullYear }}
     </footer>
   </div>
 </template>
