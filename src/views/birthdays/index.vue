@@ -14,6 +14,7 @@
             </el-input>
             <el-button type="primary" @click="queryData">搜索</el-button>
             <el-button type="primary" @click="addClick">添加生日</el-button>
+            <el-button type="primary" @click="recalculateClick">重新计算</el-button>
           </div>
         </div>
       </template>
@@ -121,7 +122,7 @@
 import { onMounted, reactive ,ref} from "vue";
 import { ElMessage } from "element-plus";
 import { Search } from "@element-plus/icons-vue";
-import { getBirthdayList,addBirthday,updateBirthday,deleteBirthday } from "@/api/birthdays";
+import { getBirthdayList,addBirthday,updateBirthday,deleteBirthday,recalculateBirthdays } from "@/api/birthdays";
 
 const formRef = ref();
 const today = new Date()
@@ -247,6 +248,17 @@ function queryData() {
     .finally(() => {
       state.loading = false;
     });
+}
+
+function recalculateClick() {
+  recalculateBirthdays().then(res => {
+    if (res.code === 0) {
+      ElMessage.success("重新计算成功");
+      queryData();
+    } else {
+      ElMessage.error(res.message);
+    }
+  });
 }
 
 function handleSizeChange(val) {

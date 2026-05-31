@@ -31,3 +31,10 @@ export function deleteBirthday(id) {
     method: "delete",
   });
 }
+
+export function recalculateBirthdays() {
+  return request({
+    url: `/birthdays/recalculate`,
+    method: "get",
+  });
+}
